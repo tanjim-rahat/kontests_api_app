@@ -21,7 +21,7 @@ function Header() {
   }, []);
 
   return (
-    <header className="h-[10vh]">
+    <header className="h-[15vh]">
       <Container className="h-full flex items-center justify-between relative">
         <LogoText />
 

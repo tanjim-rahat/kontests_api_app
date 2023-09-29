@@ -6,13 +6,21 @@ import ExLinkIcon from "./components/icons/ExLink";
 
 function App() {
   const [data, setData] = useState([]);
+  const [pagination, setPagination] = useState({
+    shownPerPage: 10,
+    shownPage: 0,
+    pageCount: 0,
+  });
 
   useEffect(() => {
     fetch("https://kontests.net/api/v1/all")
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
-        console.log(data);
+        setData(data.map((d, index) => ({ id: index, ...d })));
+        setPagination((prev) => ({
+          ...prev,
+          pageCount: Math.ceil(data.length / prev.shownPerPage),
+        }));
       });
   }, []);
 
@@ -28,71 +36,75 @@ function App() {
     <div className="fixed inset-0 bg-dark text-white">
       <Header />
 
-      <main className="h-[80vh]">
+      <main className="h-[75vh]">
         <Container>
-          <section className="w-full h-[70vh]">
-            <div className="w-full h-[5vh] bg-black grid grid-cols-12 items-center font-medium text-sm">
-              <p className="text-center">SL</p>
-              <p className="text-center col-span-6">Name</p>
-              <p className="text-center col-span-3">Lifespan</p>
-              <p className="text-center col-span-2">Status</p>
-            </div>
-
+          <section className="w-full h-[65vh]">
             <div className="h-[65vh] overflow-y-auto">
-              {data.map((datum, index) => (
-                <div
-                  key={datum.url}
-                  className={`w-full grid grid-cols-12 items-center py-6 ${
-                    index % 2 == 0 ? "bg-dark2" : "bg-dark3"
-                  }`}
-                >
-                  <p className="text-center font-medium">#0{index + 1}</p>
+              {data
+                .slice(
+                  pagination.shownPage * pagination.shownPerPage,
+                  (pagination.shownPage + 1) * pagination.shownPerPage
+                )
+                .map((datum, index) => (
+                  <div
+                    key={datum.url}
+                    className={`w-full grid grid-cols-12 items-center py-6 ${
+                      index % 2 == 0 ? "bg-dark2" : "bg-dark3"
+                    }`}
+                  >
+                    <p className="text-center font-medium">#0{datum.id + 1}</p>
 
-                  <p className="col-span-6 flex flex-col gap-1">
-                    <a
-                      href={datum.url}
-                      target="_blank"
-                      className="hover:text-main"
-                    >
-                      {datum.name}
-                    </a>
-                    <a className="text-xs">({datum.site})</a>
-                  </p>
+                    <p className="col-span-6 flex flex-col gap-1">
+                      <a
+                        href={datum.url}
+                        target="_blank"
+                        className="hover:text-main"
+                      >
+                        {datum.name}
+                      </a>
+                      <a className="text-xs">({datum.site})</a>
+                    </p>
 
-                  <div className="col-span-3 text-sm flex flex-col">
-                    <p className="flex">
-                      <span className="w-10 font-medium text-main">Start:</span>{" "}
-                      {formatDate(datum.start_time)}
-                    </p>
-                    <p className="flex">
-                      <span className="w-10 font-medium text-main">End:</span>{" "}
-                      {formatDate(datum.end_time)}
-                    </p>
+                    <div className="col-span-3 text-sm flex flex-col">
+                      <p className="flex">
+                        <span className="w-10 font-medium text-main">
+                          Start:
+                        </span>{" "}
+                        {formatDate(datum.start_time)}
+                      </p>
+                      <p className="flex">
+                        <span className="w-10 font-medium text-main">End:</span>{" "}
+                        {formatDate(datum.end_time)}
+                      </p>
+                    </div>
+
+                    <p className="text-center col-span-2">{datum.status}</p>
                   </div>
-
-                  <p className="text-center col-span-2">{datum.status}</p>
-                </div>
-              ))}
+                ))}
             </div>
           </section>
 
-          <section className="h-[10vh] flex items-center justify-center gap-8">
-            <button className="flex items-center justify-center w-8 aspect-square rounded bg-main font-medium">
-              1
-            </button>
-            <button className="flex items-center justify-center w-8 aspect-square rounded font-medium">
-              2
-            </button>
-            <button className="flex items-center justify-center w-8 aspect-square rounded font-medium">
-              3
-            </button>
+          <section className="h-[10vh] flex items-center justify-center gap-6">
+            {Array.from(Array(pagination.pageCount).keys()).map((number) => (
+              <button
+                key={number}
+                className={`flex items-center justify-center w-8 aspect-square rounded font-medium ${
+                  pagination.shownPage == number ? "bg-main" : "bg-dark2"
+                }`}
+                onClick={() =>
+                  setPagination((prev) => ({ ...prev, shownPage: number }))
+                }
+              >
+                {number + 1}
+              </button>
+            ))}
           </section>
         </Container>
       </main>
 
       <footer className="h-[10vh]">
         <Container className="h-full flex items-center justify-between">
-          <div className="flex flex-col gap-1">
+          <div>
             <LogoText className="text-main" />
 
             <p className="text-xs">
@@ -108,7 +120,7 @@ function App() {
           </div>
 
           <a href="https://kontests.net/api">
-            <button>
+            <button className="p-2 rounded">
               <ExLinkIcon />
             </button>
           </a>
