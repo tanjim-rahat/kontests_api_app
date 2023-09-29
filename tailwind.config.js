@@ -8,7 +8,7 @@ export default {
         dark2: "#252525",
         dark3: "#333333",
 
-        main: "#3177ff",
+        main: "#508BFF",
       },
     },
   },
