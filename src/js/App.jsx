@@ -1,4 +1,5 @@
 import Container from "./components/Container";
+import FilterIcon from "./components/icons/Filter";
 
 function App() {
   return (
@@ -6,10 +7,20 @@ function App() {
       <header className="h-[100px]">
         <Container className="h-full flex items-center justify-between">
           <a href="/">
-            <button aria-label="logo" role="hyperlink">
+            <button
+              aria-label="logo"
+              role="hyperlink"
+              className="uppercase text-xl tracking-wide font-medium"
+            >
               Kontests
             </button>
           </a>
+
+          <div className="flex items-center gap-8">
+            <button>
+              <FilterIcon />
+            </button>
+          </div>
         </Container>
       </header>
       <main></main>
