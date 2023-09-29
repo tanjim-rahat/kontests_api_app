@@ -1,4 +1,5 @@
 import Container from "./components/Container";
+import Searchbar from "./components/Searchbar";
 import FilterIcon from "./components/icons/Filter";
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
           </a>
 
           <div className="flex items-center gap-8">
+            <Searchbar />
+
             <button>
               <FilterIcon />
             </button>
