@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "./components/Container";
+import Header from "./components/Header";
 import LogoText from "./components/LogoText";
-import Searchbar from "./components/Searchbar";
 import ExLinkIcon from "./components/icons/ExLink";
-import FilterIcon from "./components/icons/Filter";
-import { useEffect } from "react";
 
 function App() {
   const [data, setData] = useState([]);
@@ -28,24 +26,12 @@ function App() {
 
   return (
     <div className="fixed inset-0 bg-dark text-white">
-      <header className="h-[10vh]">
-        <Container className="h-full flex items-center justify-between">
-          <LogoText />
-
-          <div className="flex items-center gap-8">
-            <Searchbar />
-
-            <button>
-              <FilterIcon />
-            </button>
-          </div>
-        </Container>
-      </header>
+      <Header />
 
       <main className="h-[80vh]">
         <Container>
           <section className="w-full h-[70vh]">
-            <div className="w-full h-[5vh] bg-black grid grid-cols-12 items-center font-medium text-sm translate-y-8">
+            <div className="w-full h-[5vh] bg-black grid grid-cols-12 items-center font-medium text-sm">
               <p className="text-center">SL</p>
               <p className="text-center col-span-6">Name</p>
               <p className="text-center col-span-3">Lifespan</p>
