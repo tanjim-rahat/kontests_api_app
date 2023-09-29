@@ -5,3 +5,8 @@
 * {
   font-family: 'Inter', sans-serif;
 }
+
+header {
+  background: rgb(37,37,37);
+  background: linear-gradient(180deg, rgba(37,37,37,1) 0%, rgba(42,42,42,1) 100%);
+}
