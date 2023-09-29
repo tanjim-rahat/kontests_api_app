@@ -1,4 +1,5 @@
 import Container from "./components/Container";
+import LogoText from "./components/LogoText";
 import Searchbar from "./components/Searchbar";
 import ExLinkIcon from "./components/icons/ExLink";
 import FilterIcon from "./components/icons/Filter";
@@ -8,15 +9,7 @@ function App() {
     <div className="fixed inset-0 bg-dark text-white">
       <header className="h-[10vh]">
         <Container className="h-full flex items-center justify-between">
-          <a href="/">
-            <button
-              aria-label="logo"
-              role="hyperlink"
-              className="uppercase text-xl tracking-wide font-medium"
-            >
-              Kontests
-            </button>
-          </a>
+          <LogoText />
 
           <div className="flex items-center gap-8">
             <Searchbar />
@@ -31,15 +24,7 @@ function App() {
       <footer className="h-[10vh] bg-red-500">
         <Container className="h-full flex items-center justify-between">
           <div className="flex flex-col gap-1">
-            <a href="/">
-              <button
-                aria-label="logo"
-                role="hyperlink"
-                className="uppercase text-xl tracking-wide font-medium text-main"
-              >
-                Kontests
-              </button>
-            </a>
+            <LogoText className="text-main" />
 
             <p className="text-xs">
               Created using{" "}
