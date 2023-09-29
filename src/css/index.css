@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 header {
@@ -14,4 +14,16 @@ header {
 footer {
   background: rgb(37,37,37);
   background: linear-gradient(0deg, rgba(37,37,37,1) 0%, rgba(42,42,42,1) 100%);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #252525
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1a1a1a
 }

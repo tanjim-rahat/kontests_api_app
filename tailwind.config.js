@@ -10,6 +10,11 @@ export default {
 
         main: "#508BFF",
       },
+
+      fontFamily: {
+        inter: "'Inter', sans-serif",
+        montserrat: "'Montserrat', sans-serif",
+      },
     },
   },
   plugins: [],

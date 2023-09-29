@@ -26,7 +26,7 @@ function Header() {
         <LogoText />
 
         <div className="flex items-center gap-8">
-          <Searchbar />
+          {/* <Searchbar /> */}
 
           <button
             aria-label="filter button"
@@ -34,7 +34,7 @@ function Header() {
             className="p-2 hover:text-main duration-100 rounded"
             onClick={(event) => {
               event.stopPropagation();
-              setShowFilter(true);
+              setShowFilter((prev) => !prev);
             }}
           >
             <FilterIcon />
@@ -71,7 +71,7 @@ function Filter({ hide, sites }) {
   return (
     <div
       ref={filter}
-      className="absolute right-0 top-full -translate-y-4 bg-[#1a1a1a] rounded-md shadow text-sm"
+      className="absolute right-0 top-full -translate-y-8 bg-[#1a1a1a] rounded-md shadow text-sm z-50"
     >
       <span className="absolute w-4 h-4 bg-[#1a1a1a] rotate-45 top-0 right-0 -translate-y-1/2 -translate-x-3"></span>
 
@@ -88,7 +88,7 @@ function Filter({ hide, sites }) {
           </button>
           <span className="flex items-center gap-1">
             <p>{site[0]}</p>
-            <a href={site[2]} className="p-1 text-main">
+            <a href={site[2]} target="_blank" className="p-1 text-main">
               <button>
                 <ExLinkIcon size={12} />
               </button>
