@@ -3,15 +3,16 @@ import Container from "./components/Container";
 import Header from "./components/Header";
 import LogoText from "./components/LogoText";
 import ExLinkIcon from "./components/icons/ExLink";
+import Footer from "./components/Footer";
 
 function App() {
   const [contests, setContests] = useState([]);
   const [sites, setSites] = useState([]);
-  // const [pagination, setPagination] = useState({
-  //   shownPerPage: 10,
-  //   shownPage: 0,
-  //   pageCount: 0,
-  // });
+
+  const [resolution, setResolution] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 
   useEffect(() => {
     Promise.all([
@@ -30,7 +31,20 @@ function App() {
         }))
       );
     });
+
+    window.addEventListener("resize", updateResolution);
+
+    return () => {
+      window.removeEventListener("resize", updateResolution);
+    };
   }, []);
+
+  const updateResolution = () => {
+    setResolution({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  };
 
   const formatDate = (data) => {
     const date = new Date(data);
@@ -42,57 +56,14 @@ function App() {
 
   return (
     <div className="fixed inset-0 bg-dark text-white">
-      <Header />
+      <Header height={`${resolution.height * 0.15}px`} sites={sites} />
 
-      <main className="h-[75vh]">
+      <main style={{ height: `${resolution.height * 0.73}px` }}>
         <Container>
-          {/* <section className="w-full h-[70vh]">
-            <div className="h-[70vh] overflow-y-auto">
-              {data
-                .slice(
-                  pagination.shownPage * pagination.shownPerPage,
-                  (pagination.shownPage + 1) * pagination.shownPerPage
-                )
-                .map((datum, index) => (
-                  <div
-                    key={datum.url}
-                    className={`w-full grid grid-cols-12 items-center py-6 ${
-                      index % 2 == 0 ? "bg-dark2" : "bg-dark3"
-                    }`}
-                  >
-                    <p className="text-center font-medium">#0{datum.id + 1}</p>
-
-                    <p className="col-span-6 flex flex-col gap-1">
-                      <a
-                        href={datum.url}
-                        target="_blank"
-                        className="hover:text-main"
-                      >
-                        {datum.name}
-                      </a>
-                      <a className="text-xs">({datum.site})</a>
-                    </p>
-
-                    <div className="col-span-3 text-sm flex flex-col">
-                      <p className="flex">
-                        <span className="w-10 font-medium text-main">
-                          Start:
-                        </span>{" "}
-                        {formatDate(datum.start_time)}
-                      </p>
-                      <p className="flex">
-                        <span className="w-10 font-medium text-main">End:</span>{" "}
-                        {formatDate(datum.end_time)}
-                      </p>
-                    </div>
-
-                    <p className="text-center col-span-2">{datum.status}</p>
-                  </div>
-                ))}
-            </div>
-          </section> */}
-
-          <section className="w-full h-[70vh] overflow-y-auto p-2">
+          <section
+            style={{ height: `${resolution.height * 0.73}px` }}
+            className="w-full overflow-y-auto p-2"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {contests.map((contest, index) => (
                 <div
@@ -147,49 +118,10 @@ function App() {
               ))}
             </div>
           </section>
-
-          {/* <section className="h-[10vh] flex items-center justify-center gap-6">
-            {Array.from(Array(pagination.pageCount).keys()).map((number) => (
-              <button
-                key={number}
-                className={`flex items-center justify-center w-8 aspect-square rounded font-medium ${
-                  pagination.shownPage == number ? "bg-main" : "bg-dark2"
-                }`}
-                onClick={() =>
-                  setPagination((prev) => ({ ...prev, shownPage: number }))
-                }
-              >
-                {number + 1}
-              </button>
-            ))}
-          </section> */}
         </Container>
       </main>
 
-      <footer className="h-[10vh]">
-        <Container className="h-full flex items-center justify-between">
-          <div>
-            <LogoText className="text-main" />
-
-            <p className="text-xs px-2">
-              Created using{" "}
-              <a
-                href="https://kontests.net/api"
-                className="text-main underline"
-              >
-                kontest.net
-              </a>{" "}
-              free API
-            </p>
-          </div>
-
-          <a href="https://kontests.net/api" target="_blank">
-            <button className="p-2 rounded">
-              <ExLinkIcon />
-            </button>
-          </a>
-        </Container>
-      </footer>
+      <Footer height={`${resolution.height * 0.12}px`} />
     </div>
   );
 }

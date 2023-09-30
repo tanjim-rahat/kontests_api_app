@@ -7,21 +7,11 @@ import ExLinkIcon from "./icons/ExLink";
 import TickIcon from "./icons/Tick";
 import SpinnerIcon from "./icons/Spinner";
 
-function Header() {
+function Header({ height, sites }) {
   const [showFilter, setShowFilter] = useState(false);
 
-  const [sites, setSites] = useState([]);
-
-  useEffect(() => {
-    fetch("https://kontests.net/api/v1/sites")
-      .then((res) => res.json())
-      .then((data) => {
-        setSites(data);
-      });
-  }, []);
-
   return (
-    <header className="h-[15vh]">
+    <header style={{ height: height }}>
       <Container className="h-full flex items-center justify-between relative">
         <LogoText />
 
